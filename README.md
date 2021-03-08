@@ -1,7 +1,6 @@
 # google_sheets_api_tuntus
 Desafio Tunts Google Sheet API
 
-#Run
 to Run this project you will need 
 
 [Node & NPM](https://nodejs.org/en/)
