@@ -77,7 +77,7 @@ function updateGrades(auth) {
     const sheets = google.sheets({ version: 'v4', auth });
     sheets.spreadsheets.values.get({
         spreadsheetId: SHEET_ID,
-        range: 'A4:F',
+        range: 'engenharia_de_software!A4:F',
     }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
         const rows = res.data.values;
@@ -90,41 +90,27 @@ function updateGrades(auth) {
                 let values = [];
 
                 if (row[2] > 60 * 0.25) {
-                    values.push('Reprovado por Falta');
-                    values.push(0);
-                    valuesCell.push(values);
-                    return;
+                    return ['Reprovado por Falta', 0];
                 }
                 // set into average value
                 const average = (parseInt(row[3]) + parseInt(row[4]) + parseInt(row[5])) / 3;
 
                 if (average < 50) {
-                    values.push('Reprovado por Nota');
-                    values.push(0);
-                    valuesCell.push(values);
-                    return;
+                    return ['Reprovado por Nota', 0];
                 } else if (average > 70) {
-                    values.push('Aprovado');
-                    values.push(0);
-                    valuesCell.push(values);
-                    return;
+                    return ['Aprovado', 0];
                 } else {
                     values.push('Exame Final');
-                    let naf = Math.ceil((2 * 50) - average, 2);
-                    values.push(naf);
-                    valuesCell.push(values);
+                    return ['Exame Final', Math.ceil((2 * 50) - average, 2) ]
                 }
             });
-
-            // create const resource with the information set into valuesCell
-            const resource = { values: valuesCell };
 
             // Update configs
             const updateOptions = {
                 spreadsheetId: SHEET_ID,
                 range: '!G4:H',
                 valueInputOption: 'USER_ENTERED',
-                resource
+                resource: { values: valuesCell }
             };
 
             // Do Update and call function to make table of all spreadsheet
