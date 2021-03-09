@@ -11,13 +11,13 @@ Clone the project and run the following commands
 **NPM**
 
 ```bash
-npm install && npm start
+npm install ; npm start
 ```
 
 **Yarn**
 
 ```bash
-yarn && yarn start
+yarn ; yarn start
 ```
 
 The first time you run the application Google will display a link in terminal to authenticate and create the file `token.json`. Follow the steps to proceed
